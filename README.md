@@ -1,13 +1,7 @@
 **Gestion Pagination**
 ======================
 
-Créé par Tanguy Crepy le 01/06/2018
-
-contact: 
-- tanguy.crepy@sddea.fr
-- contact@tanguycrepy.fr
-
-Prototype qui permet de gérer les tableaux paginés, les filtres et leur conservations sur plusieurs pages sur ces tableaux, et le tri sur les colonnes des tableaux
+Librairie créée pour une application du syndicat des eaux de l'Aube qui permet de gérer les tableaux paginés, les filtres et leur conservations sur plusieurs pages sur ces tableaux, et le tri sur les colonnes des tableaux
 
 **Initialisation**
 ------------------
