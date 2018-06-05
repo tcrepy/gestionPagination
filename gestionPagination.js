@@ -161,7 +161,6 @@ GestionPagination.prototype.initSearch = function (pageName, id_display_search, 
     this.id_display_search = id_display_search || this.id_display_search;
     this.id_search_button = id_search_button || this.id_search_button;
     this.class_filtre_input = class_filtre_input || this.class_filtre_input;
-
     this.watchersSearch();
     this.getPreviousSearch();
 };
@@ -172,10 +171,12 @@ GestionPagination.prototype.initSearch = function (pageName, id_display_search, 
 GestionPagination.prototype.watchersSearch = function () {
     let GestionPagination = this;
     $(GestionPagination.id_search_button).on('click', function () {
+        console.log('click');
         let store = [];
         $(GestionPagination.id_search).find(GestionPagination.class_filtre_input).each(function () {
             store.push({name: $(this).attr('name'), value: $(this).val()});
         });
+        console.log(store);
         sessionStorage.removeItem(GestionPagination.sessionName + GestionPagination.pageName);
         sessionStorage.setItem(GestionPagination.sessionName + GestionPagination.pageName, JSON.stringify(store));
     });
@@ -194,7 +195,7 @@ GestionPagination.prototype.watchersSearch = function () {
  * récupère la dernière recherche connue
  */
 GestionPagination.prototype.getPreviousSearch = function () {
-    //TODO::gestion des types radio ou select
+    //TODO::gestion des types radio
     if (this.pageName === '') {
         return;
     }
@@ -207,6 +208,9 @@ GestionPagination.prototype.getPreviousSearch = function () {
             let input = $(this);
             datas.forEach(function (e) {
                 if (e.name === input.attr('name')) {
+                    if (input.attr('type') === 'checkbox' && e.value == 'true') {
+                        input.prop('checked', e.value);
+                    }
                     input.val(e.value);
                 }
             })
