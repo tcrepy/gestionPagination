@@ -1,0 +1,7 @@
+.th-content {
+    cursor: pointer;
+}
+
+.th-content:hover {
+    text-decoration: underline;
+}

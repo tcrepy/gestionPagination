@@ -53,11 +53,14 @@ GestionPagination.prototype.initSort = function () {
     let col = $(this.id_tableau).find('th');
     col.each(function () {
         if (typeof $(this).data('field') !== 'undefined') {
-            $(this).on('click', function () {
+            let text = $(this).text();
+            $(this).html('<span class="th-content">'+ text +'</span>');
+            $(this).append('<i class="padding-left icon sort"></i>');
+            $(this).find('.th-content').on('click', function () {
                 GestionPagination.changeOrder($(this));
                 GestionPagination.getPagineContenu();
             });
-            $(this).append('<i class="padding-left icon sort"></i>');
+
         }
     });
     this.getPagineContenu();
@@ -94,16 +97,16 @@ GestionPagination.prototype.getPagineContenu = function (functionCallBack) {
 GestionPagination.prototype.changeOrder = function (elem) {
     if (typeof elem.data('order') === 'undefined') {
         elem.data('order', 'ASC');
-        elem.find('i').attr('class', 'padding-left icon sort-desc');
-        this.order.push({'order': 'ASC', 'by': elem.data('field')});
+        elem.closest('th').find('i').attr('class', 'padding-left icon sort-desc');
+        this.order.push({'order': 'ASC', 'by': elem.closest('th').data('field')});
     } else if (elem.data('order') === 'ASC') {
         elem.data('order', 'DESC');
-        elem.find('i').attr('class', 'padding-left icon sort-asc');
+        elem.closest('th').find('i').attr('class', 'padding-left icon sort-asc');
         this.removeFieldFromOrder(elem);
-        this.order.push({'order': 'DESC', 'by': elem.data('field')});
+        this.order.push({'order': 'DESC', 'by': elem.closest('th').data('field')});
     } else {
         elem.removeData('order');
-        elem.find('i').attr('class', 'padding-left icon sort');
+        elem.closest('th').find('i').attr('class', 'padding-left icon sort');
         this.removeFieldFromOrder(elem);
     }
 };
@@ -116,7 +119,7 @@ GestionPagination.prototype.removeFieldFromOrder = function (elem) {
     let i = 0;
     let GestionPagination = this;
     this.order.forEach(function (e) {
-        if (e.by === elem.data('field')) {
+        if (e.by === elem.closest('th').data('field')) {
             GestionPagination.order.splice(i, 1);
         }
         i++;
