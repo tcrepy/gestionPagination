@@ -40,7 +40,7 @@ function GestionPagination(id_tableau, ajax, nbElemParPage, stylePagin, defaultD
     this.class_filtre_input = '.filtre_input';
     this.sessionName = 'keepSearch_';
 
-    this.transformDefaultDatas();
+    this.defaultDatas = this.transformDatas(this.defaultDatas);
 }
 
 /**
@@ -69,10 +69,11 @@ GestionPagination.prototype.initSort = function () {
 /**
  * Affiche les datas renvoyées par l'ajax dans un tableau paginé
  */
-GestionPagination.prototype.getPagineContenu = function (functionCallBack) {
-    functionCallBack = functionCallBack || function (page, total) {
-    };
-    let datas = $.merge($.merge([], this.defaultDatas), _prepare_post(this.id_search, {
+GestionPagination.prototype.getPagineContenu = function (datasSup, functionCallBack) {
+    datasSup = this.transformDatas(datasSup) || {};
+    functionCallBack = functionCallBack || function (page, total) {};
+
+    let datas = $.merge($.merge(datasSup, this.defaultDatas), _prepare_post(this.id_search, {
         'orderBy': JSON.stringify(this.order)
     }));
     _pagine_contenu(
@@ -129,22 +130,22 @@ GestionPagination.prototype.removeFieldFromOrder = function (elem) {
 /**
  * Permet de transformer le tableau defaultDatas de la forme {key: value} à {name: key, value: value} pour pouvoir l'envoyer en post
  */
-GestionPagination.prototype.transformDefaultDatas = function () {
+GestionPagination.prototype.transformDatas = function (datas) {
     let et = new Array();
     let j = 0;
-    for (i in this.defaultDatas) {
-        if ($.isArray(this.defaultDatas[i])) {
-            for (k in this.defaultDatas[i]) {
-                et[j] = {name: i + "[]", value: this.defaultDatas[i][k]};
+    for (i in datas) {
+        if ($.isArray(datas[i])) {
+            for (k in datas[i]) {
+                et[j] = {name: i + "[]", value:datas[i][k]};
                 j = j + 1;
             }
         }
         else {
-            et[j] = {name: i, value: this.defaultDatas[i]};
+            et[j] = {name: i, value: datas[i]};
             j = j + 1;
         }
     }
-    this.defaultDatas = et;
+    return et;
 };
 
 /**
