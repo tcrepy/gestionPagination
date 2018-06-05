@@ -1,7 +1,7 @@
-.th-content {
+.gp-th-content {
     cursor: pointer;
 }
 
-.th-content:hover {
+.gp-th-content:hover {
     text-decoration: underline;
 }

@@ -54,7 +54,7 @@ GestionPagination.prototype.initSort = function () {
     col.each(function () {
         if (typeof $(this).data('field') !== 'undefined') {
             let text = $(this).text();
-            $(this).html('<span class="th-content">'+ text +'</span>');
+            $(this).html('<span class="gp-th-content">'+ text +'</span>');
             $(this).append('<i class="padding-left icon sort"></i>');
             $(this).find('.th-content').on('click', function () {
                 GestionPagination.changeOrder($(this));
