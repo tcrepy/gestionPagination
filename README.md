@@ -3,6 +3,8 @@
 
 Librairie créée pour une application du syndicat des eaux de l'Aube qui permet de gérer les tableaux paginés, les filtres et leur conservations sur plusieurs pages sur ces tableaux, et le tri sur les colonnes des tableaux
 
+> Cette librairie est dépendante du modèle d'application du conseil général de l'Aube, principalement à cause de la fonction `_get_pagine_contenu()` qui en fait parti. Néanmoins, il vous suffit d'avoir une fonction similaire (récupération d'une liste en ajax avec un `LIMIT` et affichage de la pagination correspondante) pour pouvoir adapter et réutiliser la librairie
+
 **Initialisation**
 ------------------
 En ayant un tableau paginé qui a cette forme
