@@ -52,7 +52,7 @@ En ayant un tableau paginé qui a cette forme
 
 L'objet doit être instancié au début du fichier dans lequel il est appelé
 
-    let gp = new GestionPagination('#listeArticles', './ajax/ajx_gestionArticles', 20, '', {key: 'value', key2: 'value2'}, '#id_pagine', '#id_content_liste', '#search_form');
+    let gp = new GestionPagination('#listeArticles', './ajax/ajx_gestionArticles.php', 20, '', {key: 'value', key2: 'value2'}, '#id_pagine', '#id_content_liste', '#search_form');
 
 
 **Pagination**

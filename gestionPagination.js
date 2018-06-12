@@ -176,7 +176,6 @@ GestionPagination.prototype.watchersSearch = function () {
         $(GestionPagination.id_search).find(GestionPagination.class_filtre_input).each(function () {
             store.push({name: $(this).attr('name'), value: $(this).val()});
         });
-        console.log(store);
         sessionStorage.removeItem(GestionPagination.sessionName + GestionPagination.pageName);
         sessionStorage.setItem(GestionPagination.sessionName + GestionPagination.pageName, JSON.stringify(store));
     });
