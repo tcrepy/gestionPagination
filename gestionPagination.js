@@ -171,7 +171,6 @@ GestionPagination.prototype.initSearch = function (pageName, id_display_search, 
 GestionPagination.prototype.watchersSearch = function () {
     let GestionPagination = this;
     $(GestionPagination.id_search_button).on('click', function () {
-        console.log('click');
         let store = [];
         $(GestionPagination.id_search).find(GestionPagination.class_filtre_input).each(function () {
             store.push({name: $(this).attr('name'), value: $(this).val()});
