@@ -48,7 +48,9 @@ function GestionPagination(id_tableau, ajax, nbElemParPage, stylePagin, defaultD
  * Créer un watcher sur les click sur les différentes colonnes du tableau
  * tous les th ayant un data-field vont pouvoir être ordonnés et un icone signalant qu'il sont ordonnables sera visible
  */
-GestionPagination.prototype.initSort = function () {
+GestionPagination.prototype.initSort = function (datasSup) {
+    datasSup = datasSup || {};
+
     let GestionPagination = this;
     let col = $(this.id_tableau).find('th');
     col.each(function () {
@@ -63,7 +65,7 @@ GestionPagination.prototype.initSort = function () {
 
         }
     });
-    this.getPagineContenu();
+    this.getPagineContenu(datasSup);
 };
 
 /**
