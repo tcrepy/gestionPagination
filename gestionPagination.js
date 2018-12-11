@@ -133,7 +133,7 @@ GestionPagination.prototype.removeFieldFromOrder = function (elem) {
  * Permet de transformer le tableau defaultDatas de la forme {key: value} à {name: key, value: value} pour pouvoir l'envoyer en post
  */
 GestionPagination.prototype.transformDatas = function (datas) {
-    let et = new Array();
+    let et = [];
     let j = 0;
     for (i in datas) {
         if ($.isArray(datas[i])) {
@@ -225,8 +225,7 @@ GestionPagination.prototype.getPreviousSearch = function () {
 GestionPagination.prototype.displaySearch = function () {
     //--- affichage des champs de recherche
     let GestionPagination = this;
-    let classSearch = $(this.id_search).attr('class');
-    if (classSearch === 'none') {
+    if ($(this.id_search).hasClass('none')) {
         $(GestionPagination.id_search).attr('class', '');
         $(GestionPagination.id_display_search).html('<i class="icon times"></i> Annuler la recherche');
     } else {
