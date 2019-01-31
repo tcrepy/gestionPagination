@@ -175,7 +175,13 @@ GestionPagination.prototype.watchersSearch = function () {
     $(GestionPagination.id_search_button).on('click', function () {
         let store = [];
         $(GestionPagination.id_search).find(GestionPagination.class_filtre_input).each(function () {
-            store.push({name: $(this).attr('name'), value: $(this).val()});
+            if ($(this).attr('type') === 'checkbox') {
+                if ($(this).is(':checked')) {
+                    store.push({name: $(this).attr('name'), value: 'checked'})
+                }
+            } else {
+                store.push({name: $(this).attr('name'), value: $(this).val()});
+            }
         });
         sessionStorage.removeItem(GestionPagination.sessionName + GestionPagination.pageName);
         sessionStorage.setItem(GestionPagination.sessionName + GestionPagination.pageName, JSON.stringify(store));
@@ -208,8 +214,8 @@ GestionPagination.prototype.getPreviousSearch = function () {
             let input = $(this);
             datas.forEach(function (e) {
                 if (e.name === input.attr('name')) {
-                    if (input.attr('type') === 'checkbox' && e.value == 'true') {
-                        input.prop('checked', e.value);
+                    if (input.attr('type') === 'checkbox' && e.value === 'checked') {
+                        input.prop('checked', true);
                     }
                     input.val(e.value);
                 }
@@ -232,7 +238,11 @@ GestionPagination.prototype.displaySearch = function () {
         $(GestionPagination.id_search).attr('class', 'none');
         $(GestionPagination.id_display_search).html('<i class="icon arrow-down"></i> Rechercher');
         $(GestionPagination.class_filtre_input).each(function () {
-            $(this).val('');
+            if ($(this).attr('type') === 'checkbox') {
+                $(this).attr('checked', false);
+            } else {
+                $(this).val('');
+            }
         });
         sessionStorage.removeItem(GestionPagination.sessionName + GestionPagination.pageName);
         GestionPagination.getPagineContenu();
