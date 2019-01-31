@@ -60,7 +60,7 @@ GestionPagination.prototype.initSort = function (datasSup) {
             $(this).append('<i class="padding-left icon sort"></i>');
             $(this).find('.gp-th-content').on('click', function () {
                 GestionPagination.changeOrder($(this));
-                GestionPagination.getPagineContenu();
+                GestionPagination.getPagineContenu(datasSup);
             });
 
         }
