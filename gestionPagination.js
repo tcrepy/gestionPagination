@@ -177,7 +177,7 @@ GestionPagination.prototype.watchersSearch = function () {
         $(GestionPagination.id_search).find(GestionPagination.class_filtre_input).each(function () {
             if ($(this).attr('type') === 'checkbox') {
                 if ($(this).is(':checked')) {
-                    store.push({name: $(this).attr('name'), value: 'checked'})
+                    store.push({name: $(this).attr('name'), value: $(this).val()})
                 }
             } else {
                 store.push({name: $(this).attr('name'), value: $(this).val()});
@@ -214,8 +214,8 @@ GestionPagination.prototype.getPreviousSearch = function () {
             let input = $(this);
             datas.forEach(function (e) {
                 if (e.name === input.attr('name')) {
-                    if (input.attr('type') === 'checkbox' && e.value === 'checked') {
-                        input.prop('checked', true);
+                    if (input.attr('type') === 'checkbox') {
+                        input.attr('checked', true);
                     }
                     input.val(e.value);
                 }
