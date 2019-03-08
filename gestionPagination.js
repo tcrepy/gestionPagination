@@ -213,13 +213,15 @@ GestionPagination.prototype.getPreviousSearch = function () {
         $(GestionPagination.id_search).find(GestionPagination.class_filtre_input).each(function () {
             let input = $(this);
             datas.forEach(function (e) {
-                if (e.name === input.attr('name')) {
+                if (e.name === input.attr('name') && e.value === input.val()) {
                     if (input.attr('type') === 'checkbox') {
                         input.attr('checked', true);
+                    } else {
+                        input.val(e.value);
                     }
-                    input.val(e.value);
                 }
-            })
+            });
+
         });
         GestionPagination.getPagineContenu();
     }
