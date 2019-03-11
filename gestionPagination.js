@@ -158,12 +158,15 @@ GestionPagination.prototype.transformDatas = function (datas) {
  * @param id_search_button
  * @param class_filtre_input
  */
-GestionPagination.prototype.initSearch = function (pageName, id_display_search, id_search_button, class_filtre_input) {
+GestionPagination.prototype.initSearch = function (pageName, id_display_search, id_search_button, class_filtre_input, PSPlusFunction) {
     let gp = this;
     this.pageName = pageName;
     this.id_display_search = id_display_search || this.id_display_search;
     this.id_search_button = id_search_button || this.id_search_button;
     this.class_filtre_input = class_filtre_input || this.class_filtre_input;
+    this.PSPlusFunction = PSPlusFunction || function () {
+    };
+
 
     //on stocke dans une variable les valeurs par defaut des input type checkbox
     //à voir si on ne stocke pas tous les input ?
@@ -216,6 +219,7 @@ GestionPagination.prototype.watchersSearch = function () {
  * récupère la dernière recherche connue
  */
 GestionPagination.prototype.getPreviousSearch = function () {
+    let GestionPagination = this;
     //TODO::gestion des types radio
     if (this.pageName === '') {
         return;
@@ -224,7 +228,6 @@ GestionPagination.prototype.getPreviousSearch = function () {
     if (datas !== null) {
         datas = JSON.parse(datas);
         this.displaySearch();
-        let GestionPagination = this;
         $(GestionPagination.id_search).find(GestionPagination.class_filtre_input).each(function () {
             let input = $(this);
             if (input.attr('type') === 'checkbox') {
@@ -241,6 +244,7 @@ GestionPagination.prototype.getPreviousSearch = function () {
             });
 
         });
+        GestionPagination.PSPlusFunction();
         GestionPagination.getPagineContenu();
     }
 };
