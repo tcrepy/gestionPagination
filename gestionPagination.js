@@ -56,7 +56,7 @@ GestionPagination.prototype.initSort = function (datasSup) {
     col.each(function () {
         if (typeof $(this).data('field') !== 'undefined') {
             let text = $(this).text();
-            $(this).html('<span class="gp-th-content">'+ text +'</span>');
+            $(this).html('<span class="gp-th-content">' + text + '</span>');
             $(this).append('<i class="padding-left icon sort"></i>');
             $(this).find('.gp-th-content').on('click', function () {
                 GestionPagination.changeOrder($(this));
@@ -73,7 +73,8 @@ GestionPagination.prototype.initSort = function (datasSup) {
  */
 GestionPagination.prototype.getPagineContenu = function (datasSup, functionCallBack) {
     datasSup = this.transformDatas(datasSup) || {};
-    functionCallBack = functionCallBack || function (page, total) {};
+    functionCallBack = functionCallBack || function (page, total) {
+    };
 
     let datas = $.merge($.merge(datasSup, this.defaultDatas), _prepare_post(this.id_search, {
         'orderBy': JSON.stringify(this.order)
@@ -138,11 +139,10 @@ GestionPagination.prototype.transformDatas = function (datas) {
     for (i in datas) {
         if ($.isArray(datas[i])) {
             for (k in datas[i]) {
-                et[j] = {name: i + "[]", value:datas[i][k]};
+                et[j] = {name: i + "[]", value: datas[i][k]};
                 j = j + 1;
             }
-        }
-        else {
+        } else {
             et[j] = {name: i, value: datas[i]};
             j = j + 1;
         }
@@ -159,10 +159,25 @@ GestionPagination.prototype.transformDatas = function (datas) {
  * @param class_filtre_input
  */
 GestionPagination.prototype.initSearch = function (pageName, id_display_search, id_search_button, class_filtre_input) {
+    let gp = this;
     this.pageName = pageName;
     this.id_display_search = id_display_search || this.id_display_search;
     this.id_search_button = id_search_button || this.id_search_button;
     this.class_filtre_input = class_filtre_input || this.class_filtre_input;
+
+    //on stocke dans une variable les valeurs par defaut des input type checkbox
+    //à voir si on ne stocke pas tous les input ?
+    this.defaultCheckboxDatas = [];
+    $(gp.id_search).find(gp.class_filtre_input).each(function () {
+        let input = $(this);
+        if (input.attr('type') === 'checkbox') {
+            gp.defaultCheckboxDatas.push({
+                name: input.attr('name'),
+                checked: input.is(':checked'),
+                id: input.attr('id')
+            });
+        }
+    });
     this.watchersSearch();
     this.getPreviousSearch();
 };
@@ -212,8 +227,11 @@ GestionPagination.prototype.getPreviousSearch = function () {
         let GestionPagination = this;
         $(GestionPagination.id_search).find(GestionPagination.class_filtre_input).each(function () {
             let input = $(this);
+            if (input.attr('type') === 'checkbox') {
+                input.attr('checked', false);
+            }
             datas.forEach(function (e) {
-                if (e.name === input.attr('name')) {
+                if (e.name === input.attr('name') && e.value === input.val()) {
                     if (input.attr('type') === 'checkbox') {
                         input.attr('checked', true);
                     } else {
@@ -241,7 +259,12 @@ GestionPagination.prototype.displaySearch = function () {
         $(GestionPagination.id_display_search).html('<i class="icon arrow-down"></i> Rechercher');
         $(GestionPagination.class_filtre_input).each(function () {
             if ($(this).attr('type') === 'checkbox') {
-                $(this).attr('checked', false);
+                //on récupère la valeur par défaut des input type checkbox
+                for (i in GestionPagination.defaultCheckboxDatas) {
+                    if (GestionPagination.defaultCheckboxDatas[i]['name'] === $(this).attr('name') && GestionPagination.defaultCheckboxDatas[i]['id'] === $(this).attr('id')) {
+                        $(this).attr('checked', GestionPagination.defaultCheckboxDatas[i]['checked']);
+                    }
+                }
             } else {
                 $(this).val('');
             }
