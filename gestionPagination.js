@@ -212,6 +212,9 @@ GestionPagination.prototype.getPreviousSearch = function () {
         let GestionPagination = this;
         $(GestionPagination.id_search).find(GestionPagination.class_filtre_input).each(function () {
             let input = $(this);
+            if (input.attr('type') === 'checkbox') {
+                input.attr('checked', false);
+            }
             datas.forEach(function (e) {
                 if (e.name === input.attr('name') && e.value === input.val()) {
                     if (input.attr('type') === 'checkbox') {
